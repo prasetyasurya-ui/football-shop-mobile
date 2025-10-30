@@ -10,6 +10,9 @@ Selamat datang di repositori Wolverhampton Shop, sebuah aplikasi web e-commerce 
 
 ## Jelaskan apa itu widget tree pada Flutter dan bagaimana hubungan parent-child (induk-anak) bekerja antar widget.
 
+Widget tree adalah tree yang nodenya dalah widget. Setiap widget dapat memiliki child dan parent dapat mengatur batasan untuk childnya seperti ukuran parent juga dapat mengatur letak posisi child di parent
+
+## Sebutkan semua widget yang kamu gunakan dalam proyek ini dan jelaskan fungsinya.
 - Stateless Widget
 widget dasar yang tidak berubah konfigurasinya.
 - Scaffold
