@@ -1,29 +1,69 @@
 ⚽ Wolverhampton Shop - Proyek Django
 
-Selamat datang di repositori Wolverhampton Shop, sebuah aplikasi web e-commerce sederhana yang dibangun menggunakan framework Django. Proyek ini dikembangkan sebagai bagian dari tugas mata kuliah Pengembangan Berbasis Platform (PBP).
+Selamat datang di repositori Wolverhampton Shop, sebuah aplikasi web e-commerce mobile sederhana yang dibangun menggunakan framework flutter. Proyek ini dikembangkan sebagai bagian dari tugas mata kuliah Pengembangan Berbasis Platform (PBP).
 
-**[🔗 Tugas Individu 7](https://github.com/prasetyasurya-ui/football-shop-mobile/wiki/Tugas-Individu-7)**
+**[🔗 Tugas Individu 8](https://github.com/prasetyasurya-ui/football-shop-mobile/wiki/Tugas-Individu-7)**
 
-## Tugas Individu 8
+## Tugas Individu 9
 
-## Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
+## Jelaskan mengapa kita perlu membuat model Dart saat mengambil/mengirim data JSON? Apa konsekuensinya jika langsung memetakan `Map<String, dynamic>` tanpa model (terkait validasi tipe, null-safety, maintainability)?
+Karena Dart adalah bahasa yang mengutamakan keamanan tipe, setiap field harus ada tipe data yang secara eksplisit didefinisikan sehingga kita mempunyai set of data yang konsisten. Selain itu, pada model terdapat property null safety (seperti String?).
 
-Kedua Method ini digunakan untuk berpindah antar halaman dengan stack dan perbedaannya bagaimana cara mereka mengelola stack tersebut
-
-- `Navigator.push()` menambahkan rute baru ke paling atas stack
-- `Navigator.pushReplacement()` rute saat ini akan dihapus dari stack dan digantikan dengan rute baru
-
-1. Untuk `Navigator.push()` cocok digunakan saat pengguna berada di halaman utama dan ingin ke halaman add product form dan ketika memencet kembali mereka akan ke halaman utama
-2. Untuk `Navigator.pushReplacement()` cocok digunakan saat pengguna dari halaman add product misalnya akan ke page lihat products, mereka akan kembali ke halaman utama dan bukan halaman add product
+Konsekuensi dari hanya menggunakan map adalah harus validasi setiap field saat diakses, ketika menggunakan tipe data yang salah dapat menyebabkan runtime error. Selain itu, harus selalu mengecek null manual karena tidak ada null safety seperti model. Untuk maintanability, apabila struktur JSON dari API berubah, logika akses dimana semua `Map<String, Dynamic>` digunakan harus diubah
 
 
-## Bagaimana kamu memanfaatkan hierarchy widget seperti Scaffold, AppBar, dan Drawer untuk membangun struktur halaman yang konsisten di seluruh aplikasi?
-Scaffold digunakan sebagai kerangka dasar struktur visual dari aplikasi. Appbar digunakan untuk menyajikan judul di paling atas layar secara konsisten letaknya. Drawer digunakan untuk menu navigasi yang dapat diakses secara cepat
+## Apa fungsi package http dan CookieRequest dalam tugas ini? Jelaskan perbedaan peran http vs CookieRequest
+1. Fungsi package http adalah package standard dart/flutter untuk melakukan HTTP request
+2. Fungsi CookieRequest adalah sebagai hal yang mempertahankan cookie pada request yang berbeda
 
-##  Dalam konteks desain antarmuka, apa kelebihan menggunakan layout widget seperti Padding, SingleChildScrollView, dan ListView saat menampilkan elemen-elemen form? Berikan contoh penggunaannya dari aplikasi kamu.
-- Padding, kelebihan dari padding adalah mencegah elemen menempel langsung ke tepi suatu elemen lain, akan memberikan jarak kosong (whitespace), digunakan untuk di form untuk bagian inputnya
-- SingleChildScrollView, Memungkinkan konten di dalamnya untuk discroll ketika konten melebihi ukuran layar. Mencegah overflow. (digunakan untuk page form agar bisa discroll ketika input form banyak yang membuat menjadi panjang ke bawah)
-- ListView, Untuk menampilkan daftar item yang dinamis. (digunakan pada drawer untuk menampilkan list item)
+##  Jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter
+1. Mempertahankan Sesi, memastikan bahwa satu sesi yang sama digunakan untuk semua request API
+2. Efisiensi, tanpa mengirim cookie secara manual pada setiap panggilan
 
-## Bagaimana kamu menyesuaikan warna tema agar aplikasi Football Shop memiliki identitas visual yang konsisten dengan brand toko?
-Implementasi menggunakan primary color dan color secondary dengan menggunakan context agar semua widget dapat menggunakan warna warna tema yang telah ditentukan.
+## Jelaskan konfigurasi konektivitas yang diperlukan agar Flutter dapat berkomunikasi dengan Django. Mengapa kita perlu menambahkan 10.0.2.2 pada ALLOWED_HOSTS, mengaktifkan CORS dan pengaturan SameSite/cookie, dan menambahkan izin akses internet di Android? Apa yang akan terjadi jika konfigurasi tersebut tidak dilakukan dengan benar?
+
+1. `10.0.2.2` di `ALLOWED_HOSTS` (Django)
+`10.0.2.2` adalah alamat IP Khusus yang digunakan oleh Android Emulator untuk merujuk ke host development machine. Django membatasi host yang dapat mengakses, jadi dengan menambahkan IP tersebut di `ALLOWED_HOSTS` akan memungkinkan request dari emulator diterima oleh server Django yang berjalan. Apabila tidak ditambahkan maka request emulator tidak akan di terima server django
+
+
+2. Mengaktifkan `CORS`
+`CORS (Cross-Origin Resource Sharing)` adalah mekanisme keamanan yang membatasi request HTTP lintas domain. Flutter yang berjalan di emulator akan dianggap sebagai domain yang berbeda dari Django, Mengaktifkan `CORS` akan memungkinkan request dari Flutter diizinkan oleh Django. Apabila tidak diaktifkan maka request dari flutter akan ditolak oleh Django
+
+3. Pengaturan `SameSite` atau `Cookie`
+Saat menggunakan autentikasi berbasis sesi, Django mengatur session cookie. Pengaturan CSRF_COOKIE_SAMESITE dan SESSION_COOKIE_SAMESITE harus diatur ke None atau Lax/Strict sesuai kebutuhan dan harus diikuti dengan pengaturan SESSION_COOKIE_SECURE = True jika menggunakan HTTPS. Tujuannya adalah memastikan browser dapat mengirim cookie sesi kembali ke server. Apabila tidak, terjadi Autentikasi gagal karena request selanjutnya tidak dianggap terautentikasi karena cookie tidak kembali ke server
+
+4. Izin akses internet di Android
+Aplikasi Android tidak memiliki akses jaringan secara default. Izin `<uses-permission android:name="android.permission.INTERNET"/>` harus ditambahkan ke file AndroidManifest.xml agar aplikasi Flutter dapat melakukan request HTTP/HTTPS. Apabila tidak, aplikasi tidak akan bisa mengakses internet dan tidak dapat mengirim request ke server django
+
+## Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+1. Input Data (Flutter): User memasukkan data ke form dan menekan tombol save/kirim
+2. Validasi Lokal: Flutter akan memvalidasi input
+3. Membuat objek model dari data: Data input akan menjadi satu kesatuan yaitu model Dart
+4. Membuat JSON: dari model Dart akan diubah menjadi string JSON
+5. HTTP Request: Instance `CookieRequest` atau `http` akan digunakan untuk mengirim JSON String endpoint API Django
+6. Validasi dan Deserialisasi: Data JSON divalidasi dan diubah menjadi objek python.
+7. Logika & Penyimpanan: Data diproses dan disimpan ke databases
+8. Response balik: Django akan mengirimkan respon JSON balik ke flutter tentang status request
+9. Menerima Respon (Flutter): Flutter menerima respon JSON dan mengecek status requestnya (misalnya diterima atau ditolak)
+10. Deserialiasi model: respon JSON diubah kembali menjadi objek model Dart
+11. Pembaruan UI: StateManagement diperbarui dengan data baru, Widget yang mendengarkan perubahan state akan rebuild dan menampilkan data baru di layar
+
+## Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+- Register
+1. Input: User memasukkan username dan password
+2. Request: Data dikirimkan sebagai JSON ke endpoint register
+3. Pembuatan Akun: View register akan menerima data, memvalidasi, lalu menggunakan Django untuk membuat akun baru dan menyimpannya di database
+4. Respon (Django): Django merespon dengan status berhasil atau error tergantung di proses validasi
+5. Feedback: Jika berhasil, pengguna akan diarahkan ke Login page oleh flutter dan notifikasi apabila gagal
+
+- Login
+1. Input: User memasukkan username dan password
+2. Request: Data dikirimkan sebagai JSON ke endpoint login
+3. Verifikasi: View login akan menerima data, memvalidasi dan apabila berhasil membuat session cookie baru
+4. Pembaruan status: Flutter akan mencatat bahwa pengguna sekarang sudah login dan meredirect user ke halaman utama(menu)
+
+- Logout
+1. Input: User menekan tombol logout
+2. Request: Data dikirimkan sebagai JSON ke endpoint logout
+3. Verifikasi: View logout akan menerima data, memvalidasi dan apabila berhasil menginvalidasi sesi sekarang dan menghapus cookie
+4. Pembaruan status: Flutter akan mencatat bahwa pengguna sekarang sudah logout dan meredirect user ke login page
