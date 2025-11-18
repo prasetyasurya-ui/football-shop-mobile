@@ -58,29 +58,10 @@ class ProductDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 6),
                   Row(
                     children: [
                       // Featured badge
-                      if (product.isFeatured)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0,
-                            vertical: 6.0,
-                          ),
-                          margin: const EdgeInsets.only(bottom: 12.0),
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: const Text(
-                            'Featured',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      SizedBox(width: 6),
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12.0,
@@ -100,10 +81,34 @@ class ProductDetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(width: 6),
+                      if (product.isFeatured)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0,
+                            vertical: 6.0,
+                          ),
+                          margin: const EdgeInsets.only(bottom: 12.0),
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: const Text(
+                            'FEATURED',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
                       const SizedBox(width: 6),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  Text(
+                    "${product.terjual.toString()} Terjual",
+                    style: const TextStyle(fontSize: 12.0, height: 1.6),
+                    textAlign: TextAlign.justify,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,

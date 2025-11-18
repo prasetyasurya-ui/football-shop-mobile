@@ -83,26 +83,57 @@ class ProductEntryCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(height: 6),
+                Text(
+                  product.description,
+                  style: const TextStyle(fontSize: 16.0, height: 1.6),
+                  textAlign: TextAlign.justify,
+                ),
 
-                if (product.isFeatured) const SizedBox(height: 30),
-                if (product.isFeatured)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 6.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: const Text(
-                      'Featured',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    // Featured badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 6.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.indigo.shade100,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Text(
+                        product.category.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo.shade700,
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 6),
+                    if (product.isFeatured)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 6.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: const Text(
+                          'FEATURED',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    SizedBox(width: 6),
+                  ],
+                ),
               ],
             ),
           ),

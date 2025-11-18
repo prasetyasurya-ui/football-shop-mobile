@@ -6,6 +6,33 @@ Selamat datang di repositori Wolverhampton Shop, sebuah aplikasi web e-commerce 
 
 ## Tugas Individu 9
 
+## Step by Step
+ 
+### Mengimplementasikan fitur registrasi akun pada proyek tugas Flutter.
+Membuat register page dan menyambungkan ke endpoint register pada Django, Membuat API pada django untuk menghandle registrasi akun
+
+### Membuat halaman login pada proyek tugas Flutter.
+Membuat file `login.dart` yang merupakan apa yang akan dirender ke layar pada login page
+
+### Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+- Membuat modul baru di projek Django yaitu authentication
+- Membuat logika dan endpoint API registrasi, login, dan logout di modul tersebut
+- Dari flutter akan mengirim request ke server django untuk autentikasi
+
+### Membuat model kustom sesuai dengan proyek aplikasi Django.
+- Menggunakan website QuickType untuk konversi data JSON ke model Dart, data JSON di dapat dari mengakses view show_json
+
+### Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy. Tampilkan name, price, description, thumbnail, category, dan is_featured dari masing-masing item pada halaman ini (Dapat disesuaikan dengan field yang kalian buat sebelumnya).
+- Membuat file `product_entry_card.dart` untuk card product
+- Membuat file `product_entry_list.dart` untuk menampilkan list semua item
+- Mengambil data JSON dari server Django yang sudah di deploy untuk dibuild sebagai card pada flutter dan di tampilkan ke layar
+
+### Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+- Membuat file `product_detail.dart` untuk menampilkan detail produk
+
+### Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login
+- Membuat view `show_json_by_user` pada server Django dan tombol `My Products` akan fetch ke API Endpoint tersebut
+
 ## Jelaskan mengapa kita perlu membuat model Dart saat mengambil/mengirim data JSON? Apa konsekuensinya jika langsung memetakan `Map<String, dynamic>` tanpa model (terkait validasi tipe, null-safety, maintainability)?
 Karena Dart adalah bahasa yang mengutamakan keamanan tipe, setiap field harus ada tipe data yang secara eksplisit didefinisikan sehingga kita mempunyai set of data yang konsisten. Selain itu, pada model terdapat property null safety (seperti String?).
 
